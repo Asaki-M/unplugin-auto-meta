@@ -18,20 +18,12 @@ export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOpt
     apply: 'build',
 
     transformIndexHtml() {
-      if (hasOptions(options)) {
-        console.log(123)
-      }
-      const tags: HtmlTagDescriptor[] = []
+      let tags: HtmlTagDescriptor[] = []
 
-      const tag: HtmlTagDescriptor = {
-        tag: 'meta',
-        attrs: {
-          name: 'author',
-          content: 'qinghuan',
-        },
-        injectTo: 'head',
+      if (hasOptions(options)) {
+        tags = genrateInitMeta()
       }
-      tags.push(tag)
+
       return tags
     },
   }
@@ -39,4 +31,40 @@ export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOpt
 
 function hasOptions(options): boolean {
   return !!Object.keys(options).length
+}
+
+function genrateInitMeta(): HtmlTagDescriptor[] {
+  const tags: HtmlTagDescriptor[] = [
+    {
+      tag: 'meta',
+      attrs: {
+        name: 'description',
+        content: 'qinghuan',
+      },
+      injectTo: 'head',
+    }, {
+      tag: 'meta',
+      attrs: {
+        name: 'author',
+        content: 'qinghuan',
+      },
+      injectTo: 'head',
+    }, {
+      tag: 'meta',
+      attrs: {
+        name: 'keywords',
+        content: 'qinghuan',
+      },
+      injectTo: 'head',
+    }, {
+      tag: 'meta',
+      attrs: {
+        name: 'robots',
+        content: 'all',
+      },
+      injectTo: 'head',
+    },
+  ]
+
+  return tags
 }
