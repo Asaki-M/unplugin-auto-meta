@@ -6,14 +6,14 @@ import UnpluginAutoMeta from 'unplugin-auto-meta'
 
 const options = {
   names: [
-    { key: 'xx', content: 'xxx' }
+    { key: 'xx', content: 'xxx' },
   ],
   httpEquivs: [
     { key: 'xx', content: 'xxx' },
-    { key: 'xx', content: 'xxx' }
-  ]
+    { key: 'xx', content: 'xxx' },
+  ],
 }
 
 export default defineConfig({
-  plugins: [vue(), UnpluginAutoMeta(options)]
+  plugins: [vue(), UnpluginAutoMeta(options)],
 })

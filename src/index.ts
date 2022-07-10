@@ -1,4 +1,4 @@
-import type { PluginOption, HtmlTagDescriptor } from 'vite';
+import type { HtmlTagDescriptor, PluginOption } from 'vite'
 
 export interface MetaOption {
   key: string
@@ -17,19 +17,26 @@ export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOpt
     enforce: 'pre',
     apply: 'build',
 
-    transformIndexHtml(html: string) {
+    transformIndexHtml() {
+      if (hasOptions(options)) {
+        console.log(123)
+      }
       const tags: HtmlTagDescriptor[] = []
 
       const tag: HtmlTagDescriptor = {
         tag: 'meta',
         attrs: {
           name: 'author',
-          content: 'qinghuan'
+          content: 'qinghuan',
         },
-        injectTo: 'head'
+        injectTo: 'head',
       }
       tags.push(tag)
       return tags
     },
   }
+}
+
+function hasOptions(options): boolean {
+  return !!Object.keys(options).length
 }
