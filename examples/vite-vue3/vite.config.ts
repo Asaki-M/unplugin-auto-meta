@@ -6,11 +6,10 @@ import UnpluginAutoMeta from 'unplugin-auto-meta'
 
 const options = {
   names: [
-    { key: 'xx', content: 'xxx' },
+    { key: 'author', content: 'qinghuan' },
   ],
   httpEquivs: [
-    { key: 'xx', content: 'xxx' },
-    { key: 'xx', content: 'xxx' },
+    { key: 'Content-Security-Policy', content: "default-src 'self'; img-src https://*; child-src 'none';" },
   ],
 }
 

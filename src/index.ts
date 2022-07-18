@@ -19,9 +19,40 @@ export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOpt
 
     transformIndexHtml() {
       let tags: HtmlTagDescriptor[] = []
-
-      if (hasOptions(options)) {
+      if (!hasOptions(options)) {
         tags = genrateInitMeta()
+      } else {
+        for (let key in options) {
+          options[key].forEach(opt => {
+            if (key === 'names') {
+              tags.push({
+                tag: 'meta',
+                attrs: {
+                  name: opt.key,
+                  content: opt.content
+                },
+                injectTo: 'head',
+              })
+            } else if (key === 'httpEquivs') {
+              tags.push({
+                tag: 'meta',
+                attrs: {
+                  'http-equiv': opt.key,
+                  content: opt.content
+                },
+                injectTo: 'head'
+              })
+            } else {
+              tags.push({
+                tag: 'meta',
+                attrs: {
+                  charset: opt.charset
+                },
+                injectTo: 'head'
+              })
+            }
+          })
+        }
       }
 
       return tags
