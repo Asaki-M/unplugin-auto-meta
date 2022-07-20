@@ -7,8 +7,11 @@
     "declaration": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "outDir": "dist",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "sourceMap": false,
     "noEmitOnError": true,
     "noImplicitAny": false

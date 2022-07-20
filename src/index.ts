@@ -15,12 +15,17 @@ export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOpt
   return {
     name: 'unplugin-auto-meta',
     enforce: 'pre',
-    apply: 'build',
+    apply(config, { command }) {
+      return command === 'build' && !config.build?.ssr
+    },
 
-    transformIndexHtml() {
+    transformIndexHtml: async () => {
       let tags: HtmlTagDescriptor[] = []
       if (!hasOptions(options)) {
-        tags = genrateInitMeta()
+        // const packageJson = await import('../package.json')
+        // const { name, description, author }: { name?: string, description?: string, author?: string } = packageJson.default
+        // tags = genrateInitMeta(name, description, author)
+        tags = genrateInitMeta('', '', '')
       } else {
         for (let key in options) {
           options[key].forEach(opt => {
@@ -61,30 +66,37 @@ export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOpt
 }
 
 function hasOptions(options): boolean {
-  return !!Object.keys(options).length
+  return !!options && !!Object.keys(options).length
 }
 
-function genrateInitMeta(): HtmlTagDescriptor[] {
+function genrateInitMeta(
+  name: string | undefined,
+  description: string | undefined,
+  author: string | undefined
+): HtmlTagDescriptor[] {
+  name = name || ''
+  description = description || ''
+  author = author || ''
   const tags: HtmlTagDescriptor[] = [
     {
       tag: 'meta',
       attrs: {
         name: 'description',
-        content: 'qinghuan',
+        content: description,
       },
       injectTo: 'head',
     }, {
       tag: 'meta',
       attrs: {
         name: 'author',
-        content: 'qinghuan',
+        content: author,
       },
       injectTo: 'head',
     }, {
       tag: 'meta',
       attrs: {
         name: 'keywords',
-        content: 'qinghuan',
+        content: name,
       },
       injectTo: 'head',
     }, {

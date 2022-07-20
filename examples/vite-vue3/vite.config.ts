@@ -14,5 +14,5 @@ const options = {
 }
 
 export default defineConfig({
-  plugins: [vue(), UnpluginAutoMeta(options)],
+  plugins: [vue(), UnpluginAutoMeta()],
 })
