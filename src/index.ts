@@ -29,6 +29,16 @@ export default function UnpluginAutoMeta(options: MetaPluginOptions): PluginOpti
       tags = genrateInitMeta(name, description, author)
       for (let key in options) {
         if (key === 'name' || key === 'author' || key === 'description') continue
+        if (key === 'charset') {
+          tags.push({
+            tag: 'meta',
+            attrs: {
+              charset: options.charset
+            },
+            injectTo: 'head'
+          })
+          continue
+        }
         options[key].forEach(opt => {
           if (key === 'names') {
             tags.push({
@@ -45,14 +55,6 @@ export default function UnpluginAutoMeta(options: MetaPluginOptions): PluginOpti
               attrs: {
                 'http-equiv': opt.key,
                 content: opt.content
-              },
-              injectTo: 'head'
-            })
-          } else {
-            tags.push({
-              tag: 'meta',
-              attrs: {
-                charset: opt.charset
               },
               injectTo: 'head'
             })
