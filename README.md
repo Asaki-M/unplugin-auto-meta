@@ -20,19 +20,44 @@ yarn add unplugin-auto-meta
 
 In vite.config.js / vite.config.ts
 
+This is no `names`, `httpEquivs` and `charset` usage, see bellow: 
+```js
+import UnpluginAutoMeta from 'unplugin-auto-meta'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    UnpluginAutoMeta({
+      name: 'vite-vue3',
+      description: 'This is an amusing project, show us contents about vue3 and vite.',
+      author: 'qinghuan',
+    })
+  ],
+})
+```
+
+This is have `names`, `httpEquivs` and `charset` usage, if you set author(description, keywords) in `names` that can overflow `name`, `author`, `description`  see bellow: 
 ```js
 import UnpluginAutoMeta from 'unplugin-auto-meta'
 
 const options = {
   names: [
-    { key: 'author', content: 'qinghuan' },
+    { key: 'author', value: 'qinghuan22' },
   ],
   httpEquivs: [
     { key: 'Content-Security-Policy', content: "default-src 'self'; img-src https://*; child-src 'none';" },
-  ],
+  ]
 }
 
 export default defineConfig({
-  plugins: [vue(), UnpluginAutoMeta(options)],
+  plugins: [
+    vue(),
+    UnpluginAutoMeta({
+      name: 'vite-vue3',
+      description: 'This is an amusing project, show us contents about vue3 and vite.',
+      author: 'qinghuan',
+      ...options
+    })
+  ],
 })
 ```
