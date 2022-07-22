@@ -14,5 +14,12 @@ const options = {
 }
 
 export default defineConfig({
-  plugins: [vue(), UnpluginAutoMeta()],
+  plugins: [
+    vue(),
+    UnpluginAutoMeta({
+      name: 'vite-vue3',
+      description: 'This is an amusing project, show us contents about vue3 and vite.',
+      author: 'qinghuan',
+    })
+  ],
 })

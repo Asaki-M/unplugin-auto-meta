@@ -1,4 +1,5 @@
 import type { HtmlTagDescriptor, PluginOption } from 'vite'
+// import { promises as fs } from 'fs'
 
 export interface MetaOption {
   key: string
@@ -6,12 +7,15 @@ export interface MetaOption {
 }
 
 export interface MetaPluginOptions {
+  name: string
+  author: string
+  description: string
   names?: MetaOption[]
   httpEquivs?: MetaOption[]
   charset?: string
 }
 
-export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOption {
+export default function UnpluginAutoMeta(options: MetaPluginOptions): PluginOption {
   return {
     name: 'unplugin-auto-meta',
     enforce: 'pre',
@@ -21,52 +25,43 @@ export default function UnpluginAutoMeta(options?: MetaPluginOptions): PluginOpt
 
     transformIndexHtml: async () => {
       let tags: HtmlTagDescriptor[] = []
-      if (!hasOptions(options)) {
-        // const packageJson = await import('../package.json')
-        // const { name, description, author }: { name?: string, description?: string, author?: string } = packageJson.default
-        // tags = genrateInitMeta(name, description, author)
-        tags = genrateInitMeta('', '', '')
-      } else {
-        for (let key in options) {
-          options[key].forEach(opt => {
-            if (key === 'names') {
-              tags.push({
-                tag: 'meta',
-                attrs: {
-                  name: opt.key,
-                  content: opt.content
-                },
-                injectTo: 'head',
-              })
-            } else if (key === 'httpEquivs') {
-              tags.push({
-                tag: 'meta',
-                attrs: {
-                  'http-equiv': opt.key,
-                  content: opt.content
-                },
-                injectTo: 'head'
-              })
-            } else {
-              tags.push({
-                tag: 'meta',
-                attrs: {
-                  charset: opt.charset
-                },
-                injectTo: 'head'
-              })
-            }
-          })
-        }
+      const { name, description, author } = options
+      tags = genrateInitMeta(name, description, author)
+      for (let key in options) {
+        if (key === 'name' || key === 'author' || key === 'description') continue
+        options[key].forEach(opt => {
+          if (key === 'names') {
+            tags.push({
+              tag: 'meta',
+              attrs: {
+                name: opt.key,
+                content: opt.content
+              },
+              injectTo: 'head',
+            })
+          } else if (key === 'httpEquivs') {
+            tags.push({
+              tag: 'meta',
+              attrs: {
+                'http-equiv': opt.key,
+                content: opt.content
+              },
+              injectTo: 'head'
+            })
+          } else {
+            tags.push({
+              tag: 'meta',
+              attrs: {
+                charset: opt.charset
+              },
+              injectTo: 'head'
+            })
+          }
+        })
       }
-
       return tags
     },
   }
-}
-
-function hasOptions(options): boolean {
-  return !!options && !!Object.keys(options).length
 }
 
 function genrateInitMeta(
