@@ -1,6 +1,6 @@
 {
   "name": "unplugin-auto-meta",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Automatically generate <meta> or personalized genrate <meta>",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@antfu/eslint-config": "^0.25.2",
     "@types/node": "^18.0.0",
     "bumpp": "^8.2.1",
     "tsup": "^6.1.3",

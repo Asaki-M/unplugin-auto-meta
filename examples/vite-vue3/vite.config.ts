@@ -6,7 +6,7 @@ import UnpluginAutoMeta from 'unplugin-auto-meta'
 
 const options = {
   names: [
-    { key: 'author', content: 'qinghuan' },
+    { key: 'author', content: 'qinghuan22' },
   ],
   httpEquivs: [
     { key: 'Content-Security-Policy', content: "default-src 'self'; img-src https://*; child-src 'none';" },
@@ -17,9 +17,9 @@ export default defineConfig({
   plugins: [
     vue(),
     UnpluginAutoMeta({
-      name: 'vite-vue3',
       description: 'This is an amusing project, show us contents about vue3 and vite.',
       author: 'qinghuan',
+      ...options,
     })
   ],
 })

@@ -1,5 +1,4 @@
 import type { HtmlTagDescriptor, PluginOption } from 'vite'
-// import { promises as fs } from 'fs'
 
 export interface MetaOption {
   key: string
@@ -7,9 +6,9 @@ export interface MetaOption {
 }
 
 export interface MetaPluginOptions {
-  name: string
   author: string
   description: string
+  keywords?: string
   names?: MetaOption[]
   httpEquivs?: MetaOption[]
   charset?: string
@@ -25,10 +24,10 @@ export default function UnpluginAutoMeta(options: MetaPluginOptions): PluginOpti
 
     transformIndexHtml: async () => {
       let tags: HtmlTagDescriptor[] = []
-      const { name, description, author } = options
-      tags = genrateInitMeta(name, description, author)
+      const { description, author } = options
+      tags = genrateInitMeta(description, author, options.keywords)
       for (let key in options) {
-        if (key === 'name' || key === 'author' || key === 'description') continue
+        if (key === 'keywords' || key === 'author' || key === 'description') continue
         if (key === 'charset') {
           tags.push({
             tag: 'meta',
@@ -39,8 +38,9 @@ export default function UnpluginAutoMeta(options: MetaPluginOptions): PluginOpti
           })
           continue
         }
-        options[key].forEach(opt => {
+        for (let opt of options[key]) {
           if (key === 'names') {
+            verifyAndDel(tags, opt.key)
             tags.push({
               tag: 'meta',
               attrs: {
@@ -59,21 +59,30 @@ export default function UnpluginAutoMeta(options: MetaPluginOptions): PluginOpti
               injectTo: 'head'
             })
           }
-        })
+        }
       }
       return tags
     },
   }
 }
 
+function verifyAndDel(tags: HtmlTagDescriptor[], key: string): void {
+  const idx = tags.findIndex(item => item.attrs?.name === key)
+  if (idx === -1) return
+  tags.splice(idx, 1)
+}
+
+// const TOPCOUNT = 5
 function genrateInitMeta(
-  name: string | undefined,
-  description: string | undefined,
-  author: string | undefined
+  description: string,
+  author: string,
+  keywords?: string
 ): HtmlTagDescriptor[] {
-  name = name || ''
-  description = description || ''
-  author = author || ''
+  // if (!keywords) {
+  //   const kws = nodejieba.extract(description, TOPCOUNT).reduce((prev, curr) => prev += `${curr.word}, `, '')
+  //   keywords = kws.slice(0, kws.length - 2)
+  // }
+  keywords = keywords || ''
   const tags: HtmlTagDescriptor[] = [
     {
       tag: 'meta',
@@ -93,7 +102,7 @@ function genrateInitMeta(
       tag: 'meta',
       attrs: {
         name: 'keywords',
-        content: name,
+        content: keywords,
       },
       injectTo: 'head',
     }, {
