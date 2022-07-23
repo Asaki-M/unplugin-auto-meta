@@ -1,7 +1,14 @@
 {
   "name": "unplugin-auto-meta",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Automatically generate <meta> or personalized genrate <meta>",
+  "author": "Qinghuan",
+  "keywords": [
+    "meta",
+    "metadata",
+    "auto",
+    "plugin"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "dev": "pnpm run build -- --watch --ignore-watch examples",
