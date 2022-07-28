@@ -1,6 +1,6 @@
 {
   "name": "unplugin-auto-meta",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Automatically generate <meta> or personalized genrate <meta>",
   "author": "Qinghuan",
   "keywords": [
@@ -9,6 +9,10 @@
     "auto",
     "plugin"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asaki-M/unplugin-auto-meta"
+  },
   "main": "dist/index.js",
   "scripts": {
     "dev": "pnpm run build -- --watch --ignore-watch examples",

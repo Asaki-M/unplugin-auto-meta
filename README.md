@@ -1,6 +1,10 @@
 # unplugin-auto-meta
 Automatically generate &lt;meta> or personalized genrate &lt;meta>
 
+This plugin is a Vite Plugin, and you should use in Vite Project. By the way, it support `Vue2`, `Vue3`, `React`... When your project is Vite Project, you can use it to generate `<meta>` data.
+
+Welcome to contrubute code [here](https://github.com/Asaki-M/unplugin-auto-meta).
+
 # Usage
 
 ## Install
