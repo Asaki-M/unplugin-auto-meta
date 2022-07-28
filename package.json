@@ -1,6 +1,6 @@
 {
   "name": "unplugin-auto-meta",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Automatically generate <meta> or personalized genrate <meta>",
   "author": "Qinghuan",
   "keywords": [
@@ -28,5 +28,8 @@
     "tsup": "^6.1.3",
     "typescript": "^4.7.4",
     "vite": "^2.9.13"
+  },
+  "dependencies": {
+    "ts-tfidf": "^0.0.5"
   }
 }

@@ -1,4 +1,5 @@
 import type { HtmlTagDescriptor, PluginOption } from 'vite'
+import { calculateTfIdf } from 'ts-tfidf'
 
 export interface MetaOption {
   key: string
@@ -72,17 +73,23 @@ function verifyAndDel(tags: HtmlTagDescriptor[], key: string): void {
   tags.splice(idx, 1)
 }
 
-// const TOPCOUNT = 5
 function genrateInitMeta(
   description: string,
   author: string,
   keywords?: string
 ): HtmlTagDescriptor[] {
-  // if (!keywords) {
-  //   const kws = nodejieba.extract(description, TOPCOUNT).reduce((prev, curr) => prev += `${curr.word}, `, '')
-  //   keywords = kws.slice(0, kws.length - 2)
-  // }
-  keywords = keywords || ''
+  if (!keywords) {
+    keywords = ''
+    const keywordsList = calculateTfIdf({
+      texts: [description]
+    })[0]
+    const keywordsTop = Array.from(keywordsList.entries()).sort((a, b) => b[1] - a[1])
+    for (let i = 0; i < 5; i++) {
+      keywords += (keywordsTop[i][0] + ', ')
+    }
+    keywords = keywords.slice(0, keywords.length - 2)
+
+  }
   const tags: HtmlTagDescriptor[] = [
     {
       tag: 'meta',
