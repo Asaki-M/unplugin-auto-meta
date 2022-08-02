@@ -1,5 +1,5 @@
 {
-  "name": "unplugin-auto-meta",
+  "name": "vite-plugin-auto-meta",
   "version": "0.2.0",
   "description": "Automatically generate <meta> or personalized genrate <meta>",
   "author": "Qinghuan",
